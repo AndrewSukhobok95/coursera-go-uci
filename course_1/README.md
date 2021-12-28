@@ -1,5 +1,4 @@
-# Notes to the week
-
+# Notes From Lectures
 
 ### Pointers
 
@@ -144,4 +143,86 @@ fmt.Printf("Number of apples?")
 num, err := fmt.Scan(&appleNum)  // receives a pointer
 
 fmt.Printf(appleNum)
+```
+
+
+### Arrays
+
+```go
+var x [5]int
+x[0] = 2
+
+var x [5]int = [5]{1,2,3,4,5}
+
+x := [...]int{1,2,3,4}
+
+x := [3]int{1,2,3}
+for i, v range x {
+    fmt.Printf("ind %d, val %d", i, v)
+}
+```
+
+
+### Slices
+
+```go
+// 1ST WAY OF CREATING SLICE
+arr := [...]string{"a", "b", "c", "d","e", "f", "g"}
+s1 := arr[1:3]
+s2 := arr[2:5]
+fmt.Printf(len(s1), cap(s1))  // 2, 7
+
+// 2ND WAY OF CREATING SLICE
+sli = []int{1,2,3}            // slice, because no num.of elements or ...
+
+// 3D WAY OF CREATING SLICE
+sli = make([]int, 10)
+sli = make([]int, 10, 15)     // type, length, capacity
+
+// append element to a variable length slice
+sli = append(sli, 100)
+```
+
+
+### Hash Tables
+
+```go
+var idMap map[string]int
+idMap = make(map[string]int)
+
+idMap := map[string]int {"joe": 123}
+
+fmt.Printf(idMap["joe"])
+
+idMap["jane"] = 465
+
+delete(idMap, "joe")
+
+id, p := idMap["joe"]    // id is a value, p is bool of presence of the key
+
+fmt.Printf(len(idMap))
+
+for key, val := range idMap {
+    fmt.Printf(key, val)
+}
+```
+
+
+### Structs
+
+```go
+type struct Person {
+    name string
+    addr string
+    phone string
+}
+
+var p1 Person
+
+p1.name = "joe"
+x = p1.addr
+
+p1 := new(Person)  // sets all fields to "zero" values
+
+p1 := Person(name: "joe", addr: "a st.", phone: "123")
 ```
