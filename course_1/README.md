@@ -173,11 +173,11 @@ s2 := arr[2:5]
 fmt.Printf(len(s1), cap(s1))  // 2, 7
 
 // 2ND WAY OF CREATING SLICE
-sli = []int{1,2,3}            // slice, because no num.of elements or ...
+sli := []int{1,2,3}            // slice, because no num.of elements or ...
 
 // 3D WAY OF CREATING SLICE
-sli = make([]int, 10)
-sli = make([]int, 10, 15)     // type, length, capacity
+sli := make([]int, 10)
+sli := make([]int, 10, 15)     // type, length, capacity
 
 // append element to a variable length slice
 sli = append(sli, 100)
