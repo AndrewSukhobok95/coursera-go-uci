@@ -26,7 +26,7 @@ ptr := new(int)  // new() creates a variable and returns a pointer to it
 x := "Hi!"  // double quotes
 ```
 
-#### unicode package
+**"unicode"** package
 
 ```go
 IsDigit(r rune)
@@ -39,7 +39,7 @@ ToUpper(r rune)
 ToLower(r rune)
 ```
 
-#### strings package
+**"strings"** package
 
 ```go
 Compare(a, b)
@@ -53,7 +53,7 @@ ToUpper(s)
 TrimSpace(s)
 ```
 
-#### strconv package
+**"strconv"** package
 
 ```go
 Atoi(s)                             // ASCII to integer
@@ -225,4 +225,71 @@ x = p1.addr
 p1 := new(Person)  // sets all fields to "zero" values
 
 p1 := Person(name: "joe", addr: "a st.", phone: "123")
+```
+
+
+### Protocol Packages
+
+**"net/http"**
+
+```go
+http.Get("www.uci.edu")
+```
+
+**"net"**
+
+```go
+net.Dial("tcp", "uci.edu:80")
+```
+
+
+### JSON
+
+**Marchalling**
+
+```go
+type struct Person {
+    name string
+    addr string
+    phone string
+}
+
+p1 := Person(name: "Joe", addr: "a st.", phone: "123")
+barr, err := json.Marshal(p1)   // barr - []byte representation of json
+
+var p2 Person
+err := json.Unmarchal(barr, &p2)
+```
+
+
+### File accessed
+
+**"ioutil"** package
+
+```go
+// open and close are built in ioutil.ReadFile
+// byte array dat and error e
+dat, e := ioutil.ReadFile("test.txt")
+
+dat = "Hello World!"
+err := ioutil.WriteFile("outfile.txt", dat, 0777)
+```
+
+**"os"** package
+
+```go
+os.Open()
+os.Close()
+os.Read()
+os.Write()
+
+f, err := os.Open("dt.txt")
+barr := make([]byte, 10)
+nb, err := f.Read(barr)
+f.Close()
+
+f, err := os.Create("outfile.txt")
+bar := []byte{1,2,3}
+nb, err := f.Write(barr)
+nb, err := f.WriteString("Hi")
 ```
