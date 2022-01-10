@@ -211,7 +211,7 @@ for key, val := range idMap {
 ### Structs
 
 ```go
-type struct Person {
+type Person struct {
     name string
     addr string
     phone string
@@ -224,7 +224,7 @@ x = p1.addr
 
 p1 := new(Person)  // sets all fields to "zero" values
 
-p1 := Person(name: "joe", addr: "a st.", phone: "123")
+p1 := Person{name: "joe", addr: "a st.", phone: "123"}
 ```
 
 
