@@ -187,6 +187,8 @@ func main() {
     i := 1
     defer fmt.Println(i+1)  // i+1 is evaluated when program hits this line
                             // So, i = 1 and i + 1 = 2
+                            // It is evaluated, however, not executed
+                            // It will be 2, when it comes to the excution
     i++                     // Now i is incremented and i = 2
     fmt.Println(“Hello!”)
 }
