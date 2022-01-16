@@ -1,6 +1,6 @@
 # Notes From Lectures
 
-### Functions
+## Functions
 
 ```go
 func printX(x int) {
@@ -18,7 +18,7 @@ func foo2(x int) (int, int) {
 a, b := foo2(3)
 ```
 
-#### Call by value / reference
+### Call by value / reference
 
 - **call by value** is default in go:
 
@@ -71,7 +71,7 @@ func main() {
 }
 ```
 
-#### Variables as Functions
+### Variables as Functions
 
 ```go
 var funcVar func(int) int
@@ -86,7 +86,7 @@ func main() {
 }
 ```
 
-####  Functions as Arguments
+###  Functions as Arguments
 
 ```go
 func applyIt(afunct func (int) int, val int) int {
@@ -111,7 +111,7 @@ func main() {
 }
 ```
 
-####  Anonymous Functions
+###  Anonymous Functions
 
 ```go
 func applyIt(afunct func (int) int, val int) int {
@@ -128,7 +128,7 @@ func main() {
 ```
 
 
-####  Functions as Return Values
+###  Functions as Return Values
 
 - Closure = function + its environment
 - When functions are passed/returned, their environment comes with them!
@@ -150,7 +150,7 @@ func main() {
 }
 ```
 
-#### Functions with Variable Argument Number
+### Functions with Variable Argument Number
 
 - Use ellipsis `...` to specify
 - Treated as a slice inside function
@@ -178,7 +178,7 @@ func main() {
 ```
 
 
-#### Deferred Call Arguments
+### Deferred Call Arguments
 
 - Arguments of the Deferred Functionas are evaluated immediately, not in the deferred way.
 
@@ -198,4 +198,57 @@ Output will be:
 Hello!
 2
 */
+```
+
+
+## OOP
+
+- Go can only hide data/methods in a package.
+- Variables/functions are only exported if their names start with a capital letter.
+
+```go
+// (1) Defining type with methods:
+type MyInt int
+
+func (mi MyInt) Double () int {
+    return int(mi*2)
+}
+
+// (2) Defining type struct with methods:
+type Point struct {
+    x float64
+    y float64
+}
+
+func (p Point) DistToOrig() {
+    t := math.Pow(p.x, 2) + math.Pow(p.y, 2)
+    return math.Sqrt(t)
+}
+
+func main() {
+    // Using (1)
+    v := MyInt(3)
+    fmt.Println(v.Double())
+
+    // Using (2)
+    p1 := Point(3, 4)
+    fmt.Println(p1.DistToOrig())
+}
+```
+
+### Pointer Receivers
+
+- Receiver is passed implicitly as an argument to the method.
+- Receiver can be a pointer to a type.
+- Call by reference, pointer is passed to the method.
+
+ No Need to Reference:
+- Point is referenced as `p`, not `*p`.
+- Dereferencing is automatic with `.` operator.
+
+
+```go
+func (p *Point) OffsetX(v float64) {
+    p.x = p.x + v
+}
 ```
