@@ -252,3 +252,124 @@ func (p *Point) OffsetX(v float64) {
     p.x = p.x + v
 }
 ```
+
+
+## Interfaces
+
+- No need to explicitly state that function satisfies the interface.
+
+```go
+type Speaker interface {
+    Speak ()
+}
+
+type Dog struct {
+    name string
+}
+
+func (d Dog) Speak() {
+    fmt.Println(d.name)
+}
+
+func main() {
+    var s1 Speaker
+    var d1 Dog{"Brian"}
+    s1 = d1
+    s1.Speak()
+}
+```
+
+
+- **Empty interface** specifies no methods:
+
+```go
+func PrintMe(val interface{}) {
+    fmt.Println(val)
+}
+```
+
+### Dynamic Type vs Dynamic Value
+
+- Dynamic Type: Concrete type which it is assigned to.
+- Dynamic Value: Value of the dynamic type.
+
+```go
+type Speaker interface {
+    Speak()
+}
+
+type Dog struct {
+    name string
+}
+
+// func for Case 1
+func (d Dog) Speak() {
+    fmt.Println(d.name)
+}
+
+// func for Case 2
+func (d *Dog) Speak() {
+    if d == nil {
+        fmt.Println("<noise>")
+    } else {
+        fmt.Println(d.name)
+    }
+}
+
+func main() {
+    // Case 1:
+    // s1: Dynamic type is Dog, Dynamic value is d1
+    var s1 Speaker
+    var d1 Dog{“Brian”}
+    s1 = d1
+    s1.Speak()
+
+    // Case 2:
+    // d1 has no concrete value yet
+    // s1 has a dynamic type but no dynamic value
+    var s1 Speaker
+    var d1 *Dog
+    s1 = d1
+    s1.Speak()
+}
+```
+
+### Type Assertions
+
+```go
+// Type Assertions for Disambiguation
+func DrawShape(s Shape2D) bool {
+    rect, ok := s.(Rectangle)
+    if ok {
+        DrawRect(rect)
+    }
+
+    tri, ok := s.(Triangle)
+    if ok {
+        DrawTriangle(tri)
+    }
+}
+
+// Type Switch
+func DrawShape(s Shape2D) bool {
+    switch sh := s.(type) {
+    case Rectangle:
+        DrawRect(sh)
+    case Triangle:
+        DrawTriangle(sh)
+    }
+}
+```
+
+
+## Error Handling
+
+- Many Go programs return error interface objects to indicate errors.
+- Correct operation: `error == nil`.
+- Incorrect operation: `Error()` prints error message.
+
+```go
+type error interface {
+    Error() string
+}
+```
