@@ -65,6 +65,14 @@ func main() {
 }
 ```
 
+- Common to iteratively read from a channel
+- Iterates when sender calls `close(c)`
+
+```go
+for i := range c {
+    fmt.Println(i)
+}
+```
 
 ## Buffered Channels
 
@@ -109,3 +117,78 @@ c <- 4
 // Receive can block until first send is done
 a := <- c
 ```
+
+
+## Select Statement
+
+```go
+select {
+    case a = <- c1:
+        fmt.Println(a)
+    case b = <- c2:
+        fmt.Println(b)
+    case a = <- inchan:
+        fmt.Println("Received a")
+    case outchan <- b:
+        fmt.Println("Sent b")
+    case <- abort:
+         return
+    default:
+        fmt.Println("default case to avoid blocking")
+}
+```
+
+## Mutual Exclusion
+
+- `Lock()` method puts the flag up – Shared variable in use
+- If lock is already taken by a goroutine, `Lock()` blocks until the flag is put down
+- `Unlock()` method puts the flag down – Done using shared variable
+- When `Unlock()` is called, a blocked `Lock()` can proceed
+
+```go
+var i int = 0
+var wg sync.WaitGroup
+var mut sync.Mutex
+
+func inc() {
+    mut.Lock()
+    i =i + 1
+    mut.Unlock()
+}
+
+func main() {
+    wg.Add(2)
+    go inc()
+    go inc()
+    wg.Wait()
+    fmt.Println(i)
+}
+```
+
+
+## Synchronous Initialization
+
+```go
+var wg sync.WaitGroup
+var on sync.Once
+
+func setup() {
+    fmt.Println("Init")
+}
+
+func dostuff() {
+    on.Do(setup)
+    fmt.Println("hello")
+    wg.Done()
+}
+
+func main() {
+    wg.Add(2)
+    go dostuff()
+    go dostuff()
+    wg.Wait()
+}
+```
+
+
+
