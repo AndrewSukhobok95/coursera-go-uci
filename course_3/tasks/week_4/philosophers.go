@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 type ChopStick struct{ sync.Mutex }
@@ -20,9 +21,10 @@ func (p Philosopher) eat(host chan int, wg *sync.WaitGroup) {
 		p.leftCS.Lock()
 		p.rightCS.Lock()
 		fmt.Printf("starting to eat %d\n", p.num)
-		fmt.Printf("finishing eating %d\n", p.num)
+		time.Sleep(time.Second)
 		p.rightCS.Unlock()
 		p.leftCS.Unlock()
+		fmt.Printf("finishing eating %d\n", p.num)
 
 		<- host
 	}
